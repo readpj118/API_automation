@@ -6,3 +6,5 @@ Get users
 , Create user 
 , Update user
 , Get users with query parameters
+, Delete a user
+, Register user validation
