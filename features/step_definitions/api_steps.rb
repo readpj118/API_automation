@@ -101,3 +101,32 @@ Then(/^the following (.*) is returned$/) do |error_message|
   p @response.message
   expect(JSON.parse(@response.body)['error']).to eq(error_message)
 end
+
+Then(/^the user registration is successful$/) do
+  p @response.code
+  p @response.message
+  expect(@response.code).to eq('201')
+  expect(@response.message).to eq('Created')
+  expect(JSON.parse(@response.body)['token']).to eq("QpwL5tke4Pnpja7X")
+  expect(JSON.parse(@response.body)['token']).to_not eq(nil)
+end
+
+Then(/^the response code, message, and token are:$/) do |table|
+  @failures = []
+  responses = table.raw
+  responses.each do |header|
+    response = header[0]
+    case header[0]
+      when '201'
+        actual = @response.code
+      when 'Created'
+        actual = @response.message
+      when 'QpwL5tke4Pnpja7X'
+        actual = JSON.parse(@response.body)['token']
+      else
+        raise "#{response} does not exist"
+    end
+    @failures.push("The expected #{response} was #{actual}") unless actual == response
+  end
+  raise "#{@failures}" unless @failures.eql?([])
+end
