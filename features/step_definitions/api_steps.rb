@@ -29,6 +29,9 @@ When(/^I send an api request$/) do
       send_delete(TestConfig['host'], '/api/users/2')
     when 'register'
       send_post(TestConfig['host'], '/api/register', @json)
+    when 'options'
+      send_options(TestConfig['host'], '/api/users')
+
     else
       raise('Request method not available')
   end
@@ -129,4 +132,20 @@ Then(/^the response code, message, and token are:$/) do |table|
     @failures.push("The expected #{response} was #{actual}") unless actual == response
   end
   raise "#{@failures}" unless @failures.eql?([])
+end
+
+Given(/^I want to find out the options$/) do
+  @request = 'options'
+end
+
+Then(/^the response is not allowed$/) do
+  p @response.code
+  p @response.message
+  p @response.header
+  expect(@response.code).to eq('204')
+  expect(@response.message).to eq('No Content')
+  expect @response.header['access-control-allow-methods'].downcase.include?('options')
+  if @response.header['access-control-allow-methods'].downcase.include?('options')
+    raise('Options is included')
+  end
 end
