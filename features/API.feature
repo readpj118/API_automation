@@ -43,7 +43,6 @@ Feature: API
     When I send an api request
     Then the user registration is successful
 
-  @api
   Scenario: Successful registration with table
     Given I want to register a user with email test@testing.com and password password1
     When I send an api request
@@ -51,6 +50,13 @@ Feature: API
       | 201              |
       | Created          |
       | QpwL5tke4Pnpja7X |
+
+  @api
+  Scenario: Options validation
+    Given I want to find out the options
+    When I send an api request
+    Then the response is not allowed
+
 
 
 

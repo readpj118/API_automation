@@ -1,5 +1,5 @@
 # API_automation
-Uses BDD to demonstrate Web Service API requests
+Uses BDD to demonstrate RESTful Web Services Automation
 
 Features:
 Get users
@@ -7,4 +7,6 @@ Get users
 , Update user
 , Get users with query parameters
 , Delete a user
+, Register a user
 , Register user validation
+, Request REST options
